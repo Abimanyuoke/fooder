@@ -4,8 +4,7 @@ import { ReactNode, useState } from "react"
 import Image from "next/image"
 import MenuItem from "./menuItem"
 import Logo from '../../public/image/restaurant.png'
-import Profile from '../../public/image/profile.png'
-// import { AlertSuccess } from "../alert"
+import Profile from '../../public/image/user/1.png'
 import { removeCookie } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation";
 
@@ -17,42 +16,16 @@ type MenuType = {
     label: string
 }
 
-type ManagerProp = {
+type CahsierProp = {
     children: ReactNode,
     id: string,
     title: string,
     menuList: MenuType[]
 }
 
-const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
+const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
 
-    const router = useRouter();
-
-    const [isAlertOpen, setIsAlertOpen] = useState(false);
-    const [alertContent, setAlertContent] = useState<React.ReactNode | null>(null);
-    const [timerWidth, setTimerWidth] = useState(100);
-
-    const handleAlert = (content: React.ReactNode) => {
-        setAlertContent(content);
-        setIsAlertOpen(true);
-        setTimerWidth(100);
-
-        const duration = 2000; // Total duration for the alert in ms
-        const interval = 100; // Interval to update the timer
-        const decrement = (interval / duration) * 100; // Percentage to decrement
-
-        const intervalId = setInterval(() => {
-            setTimerWidth((prev) => {
-                if (prev <= 0) {
-                    clearInterval(intervalId);
-                    setIsAlertOpen(false);
-                    setAlertContent(null);
-                    return 0;
-                }
-                return prev - decrement;
-            });
-        }, interval);
-    };
+    const router = useRouter();;
 
     const [isShow, setIsShow] = useState(false)
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
@@ -91,17 +64,6 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
                         </svg>
                         <button className="font-bold" onClick={handleLogout}>Logout</button>
                     </button>
-
-                    {/* {isDropdownOpen && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 top-full">
-                            <a href="../manager/profil" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                            <a href="../manager/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                            <a href="" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                onClick={() => {
-                                    handleAlert(<AlertSuccess title="Success">Berhasil Logout</AlertSuccess>)
-                                }}>Logout</a>
-                        </div>
-                    )} */}
                 </div>
             </header>
             {/* end header section */}
@@ -138,7 +100,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
                 <div className="w-full mt-10 mb-6 bg-primary text-black p-3 flex gap-2 items-center">
                     <Image src={Profile} alt="Profile" width={100} height={100} className="rounded-full" />
                     <div className="text-sm font-semibold">
-                        abicoding...
+                        Zakaria
                     </div>
                 </div>
                 {/* end user section */}
@@ -157,20 +119,6 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
             </div>
             {/* end sidebar section */}
-
-            {isAlertOpen && (
-                <div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50">
-                    <div className="p-4 rounded-md shadow-lg text-center max-w-sm w-full relative">
-                        <div className="mb-4">{alertContent}</div>
-                        <div className="max-w-sm w-full h-1 bg-gray-300 rounded overflow-hidden">
-                            <div className="h-full bg-yellow-500 transition-all duration-100"
-                                style={{ width: `${timerWidth}%` }}>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
 
         </div>
     )
