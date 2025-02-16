@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes upDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px); /* Atur ketinggian sesuai kebutuhan */
+    }
+}
+
+.spin {
+    animation: spin 400s linear infinite, upDown 3s ease-in-out infinite;
+}
+
+body {
+  color: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
