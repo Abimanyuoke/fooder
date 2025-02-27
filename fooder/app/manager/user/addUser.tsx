@@ -3,7 +3,7 @@
 import { IUser } from "@/app/types"
 import { BASE_API_URL } from "@/global"
 import { post } from "@/lib/bridge"
-import { getCookie } from "@/lib/client-cookies"
+import { getCookies } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
@@ -21,7 +21,7 @@ const AddUser = () => {
         password: ``, profile_picture: ``, role: ``, createdAt: ``, updatedAt: ``
     })
     const router = useRouter()
-    const TOKEN = getCookie("token") || ""
+    const TOKEN = getCookies("token") || ""
     const [file, setFile] = useState<File | null>(null)
     const formRef = useRef<HTMLFormElement>(null)
     const openModal = () => {
@@ -75,7 +75,7 @@ const AddUser = () => {
                     <div className="sticky top-0 bg-white px-5 pt-5 pb-3 shadow">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="font-bold text-2xl">Create New User</strong>
+                                <strong className="font-bold text-2xl text-black">Create New User</strong>
                                 <small className="text-slate-400 text-sm">Managers can create user items on this page.</small>
                             </div>
                             <div className="ml-auto">
@@ -90,7 +90,7 @@ const AddUser = () => {
                     {/* end modal header */}
 
                     {/* modal body */}
-                    <div className="p-5">
+                    <div className="p-5 text-black">
                         <InputGroupComponent id={`name`} type="text" value={user.name}
                             onChange={val => setUser({ ...user, name: val })}
                             required={true} label="Name" />

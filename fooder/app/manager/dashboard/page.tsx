@@ -2,71 +2,100 @@
 
 import React from 'react'
 import Image from 'next/image';
-import Link from 'next/link';
 
-import Food1 from "../../../public/image/menu/biryani1.png";
-import Food2 from "../../../public/image/menu/biryani2.png";
-import Food3 from "../../../public/image/menu/biryani3.png";
-
-const ImageList = [
-    {
-        id: 1,
-        img: Food1
-    },
-    {
-        id: 2,
-        img: Food2
-    },
-    {
-        id: 3,
-        img: Food3
-    },
-];
-
-
+import image1 from "../../../public/image/dashboard1.png";
+import image2 from "../../../public/image/dashboard2.png";
+import { FaBoxes, FaUser } from 'react-icons/fa';
+import { FaBoxesPacking } from 'react-icons/fa6';
+import { LuRefreshCw } from 'react-icons/lu';
+import { RiDiscountPercentFill } from 'react-icons/ri';
+import { VscGraphLine } from 'react-icons/vsc';
+import { BsFileEarmarkBarGraph } from 'react-icons/bs';
+import SalesChart from '@/components/graph';
 
 const DashboardPage = () => {
-    const [imageId, setImageId] = React.useState(Food1);
     return (
-        <div className='min-h-dvh bg-gray-900 text-white duration-200 flex justify-center items-center md:px-32'>
-            <div className='container pb-8 sm:pb-0'>
-                <div className='grid grid-cols-1 sm:grid-cols-2'>
-                    {/* text content section  */}
-                    <div className='flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1'>
-                        <h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold'>
-                            Welcome to the <span className='bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent'>Foodie</span> Zone
-                        </h1>
-                        <p className='text-sm '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo quasi praesentium voluptatum aperiam laborum magni laudantium expedita, modi et velit.</p>
-                        <div>
-                            <button className='px-4 py-2 text-white bg-gradient-to-r from-primary to-secondary rounded-full hover:scale-105 duration-200'>
-                                <Link href="/manager/menu">
-                                    Order Now
-                                </Link>
-                            </button>
+        <div className='min-h-dvh bg-slate-900 p-12'>
+            <div className='container w-full'>
+                <div className='flex justify-center items-start space-x-4'>
+                    <div>
+                        <button className='flex space-x-4 text-white items-center pb-4'>
+                            <LuRefreshCw className='text-3xl' />
+                            <h3>Refresh Dashboard</h3>
+                        </button>
+                        <div className='flex justify-start items-center space-x-10'>
+                            <div className='text-white flex flex-col justify-center items-center text-center bg-secondary rounded-md p-6  w-[270px] h-[230px]'>
+                                <div className='flex flex-col  items-center space-y-4'>
+                                    <FaUser className='text-3xl' />
+                                    <p>Total Customer</p>
+                                    <h1 className='text-2xl font-bold'>100</h1>
+                                </div>
+                            </div>
+                            <div className='text-white flex flex-col justify-center items-center text-center bg-teal-600 rounded-md p-6  w-[270px] h-[230px]'>
+                                <div className='flex flex-col  items-center space-y-4'>
+                                    <FaBoxes className='text-4xl' />
+                                    <p>Total Product</p>
+                                    <h1 className='text-2xl font-bold'>150</h1>
+                                </div>
+                            </div>
+                            <div className='text-white flex flex-col justify-center items-center text-center bg-purple-700 rounded-md p-6  w-[270px] h-[230px]'>
+                                <div className='flex flex-col  items-center space-y-4'>
+                                    <FaBoxesPacking className='text-4xl' />
+                                    <p>Total Stok</p>
+                                    <h1 className='text-2xl font-bold'>857</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='mt-8 p-4 bg-slate-800 w-[890px] h-[600px] rounded-md'>
+                            <div className='space-x-4 text-white flex justify-center items-center'>
+                                <BsFileEarmarkBarGraph className='text-3xl' />
+                                <p className='text-xl font-semibold'>Grafik Nilai Transaksi Bulanan</p>
+                            </div>
+                            <SalesChart/>
+                            <div className='flex justify-start items-center space-x-5'>
+                                <div className='text-white flex flex-col justify-center items-center text-center rounded-md p-6  w-[270px] h-[230px]'>
+                                    <div className='flex flex-col items-center space-y-4'>
+                                        <p className='text-base'>Total Diskon</p>
+                                        <h1 className='text-2xl bg-slate-300 rounded-md px-16 py-1 text-blue-500 font-bold'>3.650</h1>
+                                    </div>
+                                </div>
+                                <div className='text-white flex flex-col justify-center items-center text-center rounded-md p-6  w-[270px] h-[230px]'>
+                                    <div className='flex flex-col items-center space-y-4'>
+                                        <p className='text-base'>Total Penjualan</p>
+                                        <h1 className='text-2xl bg-slate-300 rounded-md px-16 py-1 text-blue-500 font-bold'>8.500.000</h1>
+                                    </div>
+                                </div>
+                                <div className='text-white flex flex-col justify-center items-center text-center rounded-md p-6  w-[270px] h-[230px]'>
+                                    <div className='flex flex-col items-center space-y-4'>
+                                        <p className='text-base'>Total Produk Terjual</p>
+                                        <h1 className='text-2xl bg-slate-300 rounded-md px-16 py-1 text-blue-500 font-bold'>48</h1>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    {/* Image section  */}
-                    <div className='order-1 sm:order-2 min-h-[450px] sm:min-h-[450px] flex justify-center items-center relative'>
-                        {/* main image section */}
-                        <div className='flex justify-center items-center h-[300px] sm:h-[450px] overflow-hidden'>
-                            <Image src={imageId} alt="" className='w-[300px] sm:w-[450px] mx-auto spin' />
-                        </div>
-                        {/* image list section */}
-                        <div className='flex lg:flex-col lg:top-1/2 lg:-translate-y-1/2 lg:py-2 justify-center gap-4 absolute bottom-[0] lg:-right-10 bg-white/30 rounded-full'>
-                            {
-                                ImageList.map((item) => (
-                                    <Image
-                                        key={item.id} src={item.img} className='max-w-[80px] h-[80px] object-contain hover:scale-105 duration-200' onClick={() => {
-                                            setImageId(
-                                                item.id === 1 ? Food1 : item.id === 2 ? Food2 : Food3
-                                            );
-                                        }} alt={''} />
-                                ))
-                            }
+                    <div className='flex flex-col items-center justify-center pt-[46px]'>
+                        <Image src={image2} width={400} alt='gambar grafik lingkaran kurir' className='bg-slate-700 rounded-md' />
+                        <div className='space-y-4 pt-5'>
+                            <div className='text-white flex flex-col justify-center items-center text-center rounded-md bg-slate-700 p-6 w-[400px] h-[239px]'>
+                                <div className='flex flex-col items-center space-y-3'>
+                                    <RiDiscountPercentFill className='text-5xl' />
+                                    <p>Total Transaki Cash</p>
+                                    <h1 className='font-bold text-2xl text-purple-300'>10.387.350</h1>
+                                </div>
+                            </div>
+                            <div className='text-white flex flex-col justify-center items-center text-center rounded-md p-6 bg-slate-700 w-[400px] h-[238px]'>
+                                <div className='flex flex-col  items-center space-y-3'>
+                                    <VscGraphLine className='text-5xl' />
+                                    <p>Total Transaksi Non-Tunai</p>
+                                    <h1 className='font-bold text-2xl text-purple-300'>16.650</h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

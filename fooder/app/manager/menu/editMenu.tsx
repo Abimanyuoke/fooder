@@ -3,7 +3,7 @@
 import { IMenu } from "@/app/types"
 import { BASE_API_URL } from "@/global"
 import { put } from "@/lib/bridge"
-import { getCookie } from "@/lib/client-cookies"
+import { getCookies } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
@@ -17,7 +17,7 @@ const EditMenu = ({ selectedMenu }: { selectedMenu: IMenu }) => {
     const [isShow, setIsShow] = useState<boolean>(false)
     const [menu, setMenu] = useState<IMenu>({ ...selectedMenu })
     const router = useRouter()
-    const TOKEN = getCookie("token") || ""
+    const TOKEN = getCookies("token") || ""
     const [file, setFile] = useState<File | null>(null)
     const formRef = useRef<HTMLFormElement>(null)
     const openModal = () => {
@@ -64,7 +64,7 @@ const EditMenu = ({ selectedMenu }: { selectedMenu: IMenu }) => {
                     <div className="sticky top-0 bg-white px-5 pt-5 pb-3 shadow">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="font-bold text-2xl">Update Menu</strong>
+                                <strong className="font-bold text-2xl text-black">Update Menu</strong>
                                 <small className="text-slate-400 text-sm">Managers can update both Cashier and Manager roles on this page.</small>
                             </div>
                             <div className="ml-auto">
@@ -79,7 +79,7 @@ const EditMenu = ({ selectedMenu }: { selectedMenu: IMenu }) => {
                     {/* end modal header */}
 
                     {/* modal body */}
-                    <div className="p-5">
+                    <div className="p-5 text-black">
                         <InputGroupComponent id={`name`} type="text" value={menu.name}
                             onChange={val => setMenu({ ...menu, name: val })}
                             required={true} label="Name" />

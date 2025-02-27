@@ -11,9 +11,9 @@ import DeleteUser from "./deleteUser";
 
 const getUser = async (search: string): Promise<IUser[]> => {
     try {
-        const TOKEN = await getCookies("token")
+        const TOKEN = getCookies("token")
         const url = `${BASE_API_URL}/user?search=${search}`
-        const { data } = await get(url, TOKEN)
+        const { data } = await get(url, await TOKEN)
         let result: IUser[] = []
         if (data?.status) result = [...data.data]
         return result
@@ -29,12 +29,10 @@ const UserPage = async ({ searchParams }: { searchParams: { [key: string]: strin
     const search = searchParams.search ? searchParams.search.toString() : ``
     const user: IUser[] = await getUser(search)
 
-
-
     return (
         <div>
-            <div className="m-2 bg-white rounded-lg p-3 border-t-4 border-t-primary shadow-md">
-                <h4 className="text-xl font-bold mb-2">User Data</h4>
+            <div className="mt-2 bg-slate-900 rounded-lg p-3 border-t-4 border-t-primary shadow-md">
+                <h4 className="text-xl font-bold mb-2 text-white">User Data</h4>
                 <p className="text-sm text-secondary mb-4">
                     This page displays menu data, allowing menus to view details,
                     search, and manage menu items by adding, editing, or deleting them.
@@ -55,27 +53,26 @@ const UserPage = async ({ searchParams }: { searchParams: { [key: string]: strin
                             No data Available
                         </AlertInfo>
                         :
-                        <>
                             <div className="m-2">
                                 {user.map((data, index) => (
                                     <div key={`keyPrestasi${index}`} className={`flex flex-wrap shadow m-2`}>
-                                        <div className="w-full md:w-1/12 p-2">
+                                        <div className="w-full md:w-1/12 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Picture</small><br />
                                             <Image width={40} height={40} src={`${BASE_IMAGE_PROFILE}/${data.profile_picture}`} className="rounded-full overflow-hidden" alt="preview" unoptimized />
                                         </div>
-                                        <div className="w-full md:w-2/12 p-2">
+                                        <div className="w-full md:w-2/12 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Name</small> <br />
                                             {data.name}
                                         </div>
-                                        <div className="w-full md:w-1/12 p-2">
+                                        <div className="w-full md:w-1/12 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Email</small> <br />
                                             {data.email}
                                         </div>
-                                        <div className="w-full md:w-5/12 px-36 p-2">
+                                        <div className="w-full md:w-5/12 px-36 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Role</small> <br />
                                             {data.role}
                                         </div>
-                                        <div className="w-full md:w-2/12 p-2">
+                                        <div className="w-full md:w-2/12 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Action</small><br />
                                             <div className="flex gap-1">
                                                 <EditUser selectedUser={data} />
@@ -85,7 +82,6 @@ const UserPage = async ({ searchParams }: { searchParams: { [key: string]: strin
                                     </div>
                                 ))}
                             </div>
-                        </>
                 }
 
             </div>

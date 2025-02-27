@@ -1,12 +1,12 @@
-import Img from '../public/image/biryani1.png'
-import Img2 from '../public/image/biryani3.png'
-import Img3 from '../public/image/biryani2.png'
-import Img4 from '../public/image/jeruk.png'
-import Img5 from '../public/image/mangga.png'
-import Img6 from '../public/image/pisang.png'
-import Img7 from '../public/image/maryam.png'
-import Img8 from '../public/image/pancake.png'
-import Img9 from '../public/image/wafles.png'
+import Img from '../public/image/menu/biryani1.png'
+import Img2 from '../public/image/menu/biryani3.png'
+import Img3 from '../public/image/menu/biryani2.png'
+import Img4 from '../public/image/menu/jeruk.png'
+import Img5 from '../public/image/menu/mangga.png'
+import Img6 from '../public/image/menu/pisang.png'
+import Img7 from '../public/image/menu/maryam.png'
+import Img8 from '../public/image/menu/pancake.png'
+import Img9 from '../public/image/menu/wafles.png'
 
 
 export interface dataMenu {

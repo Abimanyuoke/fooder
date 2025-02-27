@@ -11,7 +11,7 @@ export default {
       colors: {
           primary: "#ffc001",
           secondary: "#ff9c01"
-      }
+      },
     },
   },
   plugins: [],

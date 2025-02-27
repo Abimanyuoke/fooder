@@ -4,9 +4,9 @@ import { ReactNode, useState } from "react"
 import Image from "next/image"
 import MenuItem from "./menuItem"
 import Logo from '../../public/image/restaurant.png'
-import Profile from '../../public/image/user/1.png'
-import { removeCookie } from "@/lib/client-cookies"
+import { getCookies, removeCookie, } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation";
+import { BASE_IMAGE_PROFILE } from "@/global"
 
 
 type MenuType = {
@@ -23,16 +23,17 @@ type CahsierProp = {
     menuList: MenuType[]
 }
 
+
 const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
-
-    const router = useRouter();;
-
+    const router = useRouter();
+    const userName = getCookies("name") || "Guest";
+    const profilePicture = getCookies("profile_picture");
     const [isShow, setIsShow] = useState(false)
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
     const toggleDropdown = () => {
         setisDropdownOpen(!isDropdownOpen)
     }
-
+    
     const handleLogout = () => {
         removeCookie("token")
         removeCookie("id")
@@ -58,12 +59,12 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
 
 
                 <div className="relative">
-                    <button onClick={toggleDropdown} className="flex items-center space-x-2 text-black">
+                    <div className="flex items-center space-x-2 text-black">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                         </svg>
                         <button className="font-bold" onClick={handleLogout}>Logout</button>
-                    </button>
+                    </div>
                 </div>
             </header>
             {/* end header section */}
@@ -98,9 +99,9 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
 
                 {/* user section */}
                 <div className="w-full mt-10 mb-6 bg-primary text-black p-3 flex gap-2 items-center">
-                    <Image src={Profile} alt="Profile" width={100} height={100} className="rounded-full" />
+                    <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`} alt="Profile" width={100} height={100} className="rounded-full" />
                     <div className="text-sm font-semibold">
-                        Zakaria
+                        {userName}
                     </div>
                 </div>
                 {/* end user section */}

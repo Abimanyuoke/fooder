@@ -3,7 +3,7 @@
 import { IUser } from "@/app/types"
 import { BASE_API_URL } from "@/global"
 import { drop } from "@/lib/bridge"
-import { getCookie } from "@/lib/client-cookies"
+import { getCookies } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
@@ -14,7 +14,7 @@ const DeleteUser = ({ selectedUser }: { selectedUser: IUser }) => {
     const [isShow, setIsShow] = useState<boolean>(false)
     const [user, setUser] = useState<IUser>({ ...selectedUser })
     const router = useRouter()
-    const TOKEN = getCookie("token") || ""
+    const TOKEN = getCookies("token") || ""
     const openModal = () => {
         setUser({ ...selectedUser })
         setIsShow(true)
@@ -50,7 +50,7 @@ const DeleteUser = ({ selectedUser }: { selectedUser: IUser }) => {
                     <div className="sticky top-0 bg-white px-5 pt-5 pb-3 shadow">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="font-bold text-2xl">Delete Menu</strong>
+                                <strong className="font-bold text-2xl text-black">Delete Menu</strong>
                                 <small className="text-slate-400 text-sm">Menus with existing transaction data cannot be deleted from this page.</small>
                             </div>
                             <div className="ml-auto">

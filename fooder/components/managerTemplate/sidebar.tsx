@@ -4,10 +4,11 @@ import { ReactNode, useState } from "react"
 import Image from "next/image"
 import MenuItem from "./menuItem"
 import Logo from '../../public/image/restaurant.png'
-import Profile from '../../public/image/profile.png'
 // import { AlertSuccess } from "../alert"
-import { removeCookie } from "@/lib/client-cookies"
+import { getCookies } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation";
+import { BASE_IMAGE_PROFILE } from "@/global"
+
 
 
 type MenuType = {
@@ -25,12 +26,15 @@ type ManagerProp = {
 }
 
 const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
-
     const router = useRouter();
-
+    const userName = getCookies("name") || "Guest";
+    const profilePicture = getCookies("profile_picture") || "default-profile.png";
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [alertContent, setAlertContent] = useState<React.ReactNode | null>(null);
     const [timerWidth, setTimerWidth] = useState(100);
+
+    console.log("Profile Picture from Cookies:", getCookies("profile_picture"));
+
 
     const handleAlert = (content: React.ReactNode) => {
         setAlertContent(content);
@@ -60,13 +64,13 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
         setisDropdownOpen(!isDropdownOpen)
     }
 
-    const handleLogout = () => {
-        removeCookie("token")
-        removeCookie("id")
-        removeCookie("name")
-        removeCookie("role")
-        router.replace(`/login`)
-    };
+    // const handleLogout = () => {
+    //     removeCookie("token")
+    //     removeCookie("id")
+    //     removeCookie("name")
+    //     removeCookie("role")
+    //     router.replace(`/login`)
+    // };
 
     return (
         <div className="w-full min-h-dvh">
@@ -85,12 +89,14 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
 
                 <div className="relative">
-                    <button onClick={toggleDropdown} className="flex items-center space-x-2 text-black">
+                    <div className="flex items-center text-black space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                         </svg>
-                        <button className="font-bold" onClick={handleLogout}>Logout</button>
-                    </button>
+                        {/* <button className="font-bold" onClick={handleLogout}>Logout</button> */}
+                    </div>
+                    {/* <button onClick={toggleDropdown} className="flex items-center space-x-2 text-black">
+                    </button> */}
 
                     {/* {isDropdownOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 top-full">
@@ -136,9 +142,13 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
                 {/* user section */}
                 <div className="w-full mt-10 mb-6 bg-primary text-black p-3 flex gap-2 items-center">
-                    <Image src={Profile} alt="Profile" width={100} height={100} className="rounded-full" />
+                    <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`}
+                        alt="Profile"
+                        width={100}
+                        height={100}
+                        className="rounded-full" />
                     <div className="text-sm font-semibold">
-                        abicoding...
+                        {userName}
                     </div>
                 </div>
                 {/* end user section */}
