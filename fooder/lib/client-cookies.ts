@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 
 export const getCookies = (key: string) => {
     return Cookies.get(key) 
+    
 }
 
 export const storeCookie = (key: string, plainText: string) => {

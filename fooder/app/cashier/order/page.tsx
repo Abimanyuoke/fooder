@@ -1,19 +1,18 @@
-"use client";
+"use client"
 
 import { useState } from 'react';
 import Image from 'next/image';
 import { transaksi } from '../../../data/transaksi';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-
-import { AlertSuccess } from '@/components/alert';
+import AddOrder from './addOrder';
+import AddOrderList from './addOrderList';
 
 // Define cart type
 type Cart = {
     [key: number]: number; // key is the menu item ID, value is the quantity
 };
 
-export default function Transaction() {
+export default function Order() {
 
     const router = useRouter();
     const searchParams = useSearchParams(); // Ambil search params dari URL
@@ -26,34 +25,6 @@ export default function Transaction() {
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedCategory = event.target.value;
         router.push(selectedCategory ? `/cashier/order?category=${selectedCategory}` : '/cashier/order');
-    };
-
-
-
-    const [isAlertOpen, setIsAlertOpen] = useState(false);
-    const [alertContent, setAlertContent] = useState<React.ReactNode | null>(null);
-    const [timerWidth, setTimerWidth] = useState(100);
-
-    const handleAlert = (e: React.ReactNode) => {
-        setAlertContent(e);
-        setIsAlertOpen(true);
-        setTimerWidth(100);
-
-        const duration = 2000; // Total duration for the alert in ms
-        const interval = 100; // Interval to update the timer
-        const decrement = (interval / duration) * 100; // Percentage to decrement
-
-        const intervalId = setInterval(() => {
-            setTimerWidth((prev) => {
-                if (prev <= 0) {
-                    clearInterval(intervalId);
-                    setIsAlertOpen(false);
-                    setAlertContent(null);
-                    return 0;
-                }
-                return prev - decrement;
-            });
-        }, interval);
     };
 
     const [cart, setCart] = useState<Cart>({}); // Explicitly set the type of cart
@@ -79,11 +50,6 @@ export default function Transaction() {
         });
     };
 
-    // Handle clearing the cart
-    const handleClearCart = () => {
-        setCart({});
-    };
-
     // Calculate total price
     const totalPrice = Object.keys(cart).reduce((total, id) => {
         const menuItem = filteredTransaksi.find((item) => item.id === parseInt(id));
@@ -99,6 +65,7 @@ export default function Transaction() {
                     {" "}
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid ullam a nisi vero qui sed consequuntur iste cum minima error.
                 </p>
+
                 <div className="mt-4 mb-6 flex justify-center">
                     <select
                         name="category"
@@ -118,7 +85,7 @@ export default function Transaction() {
                     {filteredTransaksi.map((item) => (
                         <div
                             key={item.id}
-                            className="border border-gray-300 rounded-lg p-4 text-center w-[350px] shadow-sm hover:bg-primary hover:text-white transition-all duration-300">
+                            className="border border-gray-300 bg-slate-600/35 rounded-lg p-4 text-center w-[350px] shadow-sm hover:bg-primary hover:text-white transition-all duration-300">
                             <Image
                                 src={item.image}
                                 alt={item.name}
@@ -126,7 +93,7 @@ export default function Transaction() {
                                 height={500}
                                 className="object-cover rounded-lg mb-3" />
                             <h3 className="text-lg font-semibold mb-2">{item.name}</h3>
-                            <p className="text-gray-600 mb-3">Rp {item.price.toLocaleString()}</p>
+                            <p className="mb-3">Rp {item.price.toLocaleString()}</p>
                             <div className="flex items-center justify-center gap-3">
                                 <button
                                     onClick={() => handleRemove(item.id)}
@@ -162,32 +129,15 @@ export default function Transaction() {
                             })}
                         </ul>
                         <p className="text-lg font-semibold">Total: Rp {totalPrice.toLocaleString()}</p>
-                        <button
-                            className='text-lg text-white bg-secondary py-2 px-4 rounded-md mt-4'
-                            onClick={() => {
-                                handleAlert(<AlertSuccess title="Success">Berhasil Dipesan</AlertSuccess>);
-                                handleClearCart();
-                            }}
-                        >Pesan</button>
+                        <div className='flex items-center mt-8 space-x-8'>
+                            <AddOrderList cart={cart}/>
+                            <AddOrder totalPrice={totalPrice} />
+                        </div>
                     </div>
                 ) : (
                     <p className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 w-32 text-center font-semibold hover:translate-y-1 transition-all duration-300">Harus pesan dulu</p>
                 )}
             </div>
-
-            {isAlertOpen && (
-                <div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50">
-                    <div className="p-4 rounded-md shadow-lg text-center max-w-sm w-full relative">
-                        <div className="mb-4">{alertContent}</div>
-                        <div className="max-w-sm w-full h-1 bg-gray-300 rounded overflow-hidden">
-                            <div className="h-full bg-yellow-500 transition-all duration-100"
-                                style={{ width: `${timerWidth}%` }}>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

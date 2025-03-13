@@ -18,23 +18,23 @@ const LoginPage = () => {
 
     const router = useRouter()
 
-    interface LoginResponses {
-        status: boolean;
-        message: string;
-        token: string;
-        data?: {
-            id: string;
-            name: string;
-            role: string;
-        }
-    }
+    // interface LoginResponses {
+    //     status: boolean;
+    //     message: string;
+    //     token: string;
+    //     data?: {
+    //         id: string;
+    //         name: string;
+    //         role: string;
+    //     }
+    // }
 
     const handleSubmit = async (e: FormEvent) => {
         try {
             e.preventDefault()
             const url = `${BASE_API_URL}/user/login`
             const payload = JSON.stringify({ email: email, password })
-            const { data } = await axios.post<LoginResponses>(url, payload, {
+            const { data } = await axios.post(url, payload, {
                 headers: { "Content-Type": "application/json" }
             })
             if (data.status == true) {
@@ -44,7 +44,8 @@ const LoginPage = () => {
                     storeCookie("id", data.data.id)
                     storeCookie("name", data.data.name)
                     storeCookie("role", data.data.role)
-                    let role = data.data.role
+                    storeCookie("profile_picture", data.data.profile_picture )
+                    let role = data.data.role 
                     if (role === `MANAGER`) setTimeout(() => router.replace(`/manager/dashboard`), 1000)
                     else if (role === `CASHIER`) setTimeout(() => router.replace(`/cashier/dashboard`), 1000)
                 }
@@ -59,7 +60,7 @@ const LoginPage = () => {
     return (
         <div className="w-screen h-screen bg-slate-900 bg-cover flex justify-center items-center relative z-10">
             <ToastContainer containerId={`toastLogin`} />
-            <div className="w-full h-full flex pl-56 items-center p-5">
+            <div className="sm:w-3/4 lg:w-full lg:pl-56 h-full flex mx-auto items-center p-5">
                 <div className="w-full md:w-6/12 lg:w-5/12 min-h-[600px] rounded-l-lg p-5 px-16 bg-slate-800 flex flex-col items-center relative">
                     <div className="absolute bottom-2 left-0 w-full py-2 text-center">
                     <div className="flex justify-center items-center py-3 space-x-7 text-2xl text-primary cursor-pointer">
@@ -121,7 +122,7 @@ const LoginPage = () => {
             </div>
 
             {/* buat */}
-            <div className="absolute right-[130px] -z-10">
+            <div className="absolute right-[130px] -z-10 sm:hidden lg:block">
                 <Image
                     src={gambar}
                     height={400}

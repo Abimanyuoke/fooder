@@ -21,6 +21,7 @@ const getUser = async (search: string): Promise<IUser[]> => {
         console.log(error)
         return []
     }
+    
 
 }
 

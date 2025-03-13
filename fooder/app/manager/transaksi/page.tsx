@@ -4,8 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { transaksi } from '../../../data/transaksi';
 import { useRouter, useSearchParams } from 'next/navigation'; 
-
-
 import { AlertSuccess } from '@/components/alert';
 
 // Define cart type
@@ -118,7 +116,7 @@ export default function Transaction() {
           {filteredTransaksi.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-300 rounded-lg p-4 text-center w-[350px] shadow-sm hover:bg-primary hover:text-white transition-all duration-300">
+              className="border border-gray-300 bg-slate-600/35 rounded-lg p-4 text-center w-[350px] shadow-sm hover:bg-primary hover:text-white transition-all duration-300">
               <Image
                 src={item.image}
                 alt={item.name}
@@ -126,7 +124,7 @@ export default function Transaction() {
                 height={500}
                 className="object-cover rounded-lg mb-3" />
               <h3 className="text-lg font-semibold mb-2">{item.name}</h3>
-              <p className="text-gray-600 mb-3">Rp {item.price.toLocaleString()}</p>
+              <p className="mb-3">Rp {item.price.toLocaleString()}</p>
               <div className="flex items-center justify-center gap-3">
                 <button
                   onClick={() => handleRemove(item.id)}

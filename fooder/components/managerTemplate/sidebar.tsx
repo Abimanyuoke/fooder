@@ -4,12 +4,9 @@ import { ReactNode, useState } from "react"
 import Image from "next/image"
 import MenuItem from "./menuItem"
 import Logo from '../../public/image/restaurant.png'
-// import { AlertSuccess } from "../alert"
-import { getCookies } from "@/lib/client-cookies"
+import { getCookies, removeCookie } from "../../lib/client-cookies"
 import { useRouter } from "next/navigation";
-import { BASE_IMAGE_PROFILE } from "@/global"
-
-
+import { BASE_IMAGE_PROFILE } from "@/global";
 
 type MenuType = {
     id: string,
@@ -28,49 +25,18 @@ type ManagerProp = {
 const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
     const router = useRouter();
     const userName = getCookies("name") || "Guest";
-    const profilePicture = getCookies("profile_picture") || "default-profile.png";
-    const [isAlertOpen, setIsAlertOpen] = useState(false);
-    const [alertContent, setAlertContent] = useState<React.ReactNode | null>(null);
-    const [timerWidth, setTimerWidth] = useState(100);
-
-    console.log("Profile Picture from Cookies:", getCookies("profile_picture"));
-
-
-    const handleAlert = (content: React.ReactNode) => {
-        setAlertContent(content);
-        setIsAlertOpen(true);
-        setTimerWidth(100);
-
-        const duration = 2000; // Total duration for the alert in ms
-        const interval = 100; // Interval to update the timer
-        const decrement = (interval / duration) * 100; // Percentage to decrement
-
-        const intervalId = setInterval(() => {
-            setTimerWidth((prev) => {
-                if (prev <= 0) {
-                    clearInterval(intervalId);
-                    setIsAlertOpen(false);
-                    setAlertContent(null);
-                    return 0;
-                }
-                return prev - decrement;
-            });
-        }, interval);
-    };
-
+    const profilePicture = getCookies(`profile_picture`);
     const [isShow, setIsShow] = useState(false)
-    const [isDropdownOpen, setisDropdownOpen] = useState(false);
-    const toggleDropdown = () => {
-        setisDropdownOpen(!isDropdownOpen)
-    }
+    console.log("Profile Image:", getCookies("profile_picture"));
+    console.log("BASE_IMAGE_PROFILE:", BASE_IMAGE_PROFILE);
 
-    // const handleLogout = () => {
-    //     removeCookie("token")
-    //     removeCookie("id")
-    //     removeCookie("name")
-    //     removeCookie("role")
-    //     router.replace(`/login`)
-    // };
+    const handleLogout = () => {
+        removeCookie("token")
+        removeCookie("id")
+        removeCookie("name")
+        removeCookie("role")
+        router.replace(`/login`)
+    };
 
     return (
         <div className="w-full min-h-dvh">
@@ -93,21 +59,8 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                         </svg>
-                        {/* <button className="font-bold" onClick={handleLogout}>Logout</button> */}
+                        <button className="font-bold" onClick={handleLogout}>Logout</button>
                     </div>
-                    {/* <button onClick={toggleDropdown} className="flex items-center space-x-2 text-black">
-                    </button> */}
-
-                    {/* {isDropdownOpen && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 top-full">
-                            <a href="../manager/profil" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                            <a href="../manager/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                            <a href="" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                onClick={() => {
-                                    handleAlert(<AlertSuccess title="Success">Berhasil Logout</AlertSuccess>)
-                                }}>Logout</a>
-                        </div>
-                    )} */}
                 </div>
             </header>
             {/* end header section */}
@@ -142,11 +95,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
                 {/* user section */}
                 <div className="w-full mt-10 mb-6 bg-primary text-black p-3 flex gap-2 items-center">
-                    <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`}
-                        alt="Profile"
-                        width={100}
-                        height={100}
-                        className="rounded-full" />
+                    <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`} alt="Profile" width={100} height={100} className="rounded-full" />
                     <div className="text-sm font-semibold">
                         {userName}
                     </div>
@@ -167,21 +116,6 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
             </div>
             {/* end sidebar section */}
-
-            {isAlertOpen && (
-                <div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50">
-                    <div className="p-4 rounded-md shadow-lg text-center max-w-sm w-full relative">
-                        <div className="mb-4">{alertContent}</div>
-                        <div className="max-w-sm w-full h-1 bg-gray-300 rounded overflow-hidden">
-                            <div className="h-full bg-yellow-500 transition-all duration-100"
-                                style={{ width: `${timerWidth}%` }}>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
         </div>
     )
 }

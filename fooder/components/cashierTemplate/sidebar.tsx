@@ -32,6 +32,7 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
     const toggleDropdown = () => {
         setisDropdownOpen(!isDropdownOpen)
+        console.log("Profile Image:", getCookies("profile_picture"));
     }
     
     const handleLogout = () => {

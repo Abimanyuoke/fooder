@@ -47,20 +47,20 @@ const AddUser = () => {
             const { data } = await post(url, payload, TOKEN)
             if (data?.status) {
                 setIsShow(false)
-                toast(data?.message, { hideProgressBar: true, containerId: `toastMenu`, type: `success` })
+                toast(data?.message, { hideProgressBar: true, containerId: `toastUser`, type: `success` })
                 setTimeout(() => router.refresh(), 1000)
             } else {
-                toast(data?.message, { hideProgressBar: true, containerId: `toastMenu`, type: `warning` })
+                toast(data?.message, { hideProgressBar: true, containerId: `toastUser`, type: `warning` })
             }
         } catch (error) {
             console.log(error);
-            toast(`Something Wrong`, { hideProgressBar: true, containerId: `toastMenu`, type: `error` })
+            toast(`Something Wrong`, { hideProgressBar: true, containerId: `toastUser`, type: `error` })
         }
     }
 
     return (
         <div>
-            <ToastContainer containerId={`toastMenu`} />
+            <ToastContainer containerId={`toastUser`} />
             <ButtonSuccess type="button" onClick={() => openModal()}>
                 <div className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
