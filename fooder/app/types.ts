@@ -37,13 +37,13 @@ export interface IOrder {
 }
 
 
-export interface IOrderList {
-    id: number;
-    uuid: string;
-    quantity: number;
-    note: string;
-    createdAt: string;
-    updatedAt: string;
-    menuId?: number;
-    orderId?: number; 
-}
+// export interface IOrderList {
+//     id: number;
+//     uuid: string;
+//     quantity: number;
+//     note: string;   
+//     createdAt: string;
+//     updatedAt: string;
+//     menuId?: number;
+//     orderId?: number; 
+// }

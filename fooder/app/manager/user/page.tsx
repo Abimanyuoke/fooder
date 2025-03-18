@@ -72,7 +72,7 @@ const UserPage = async ({ searchParams }: { searchParams: { [key: string]: strin
                                         <div className="w-full md:w-5/12 px-36 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Role</small> <br />
                                             {data.role}
-                                        </div>
+                                        </div> 
                                         <div className="w-full md:w-2/12 p-2 text-white">
                                             <small className="text-sm font-bold text-primary">Action</small><br />
                                             <div className="flex gap-1">

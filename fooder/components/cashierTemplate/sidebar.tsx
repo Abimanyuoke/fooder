@@ -29,11 +29,8 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
     const userName = getCookies("name") || "Guest";
     const profilePicture = getCookies("profile_picture");
     const [isShow, setIsShow] = useState(false)
+    const role = getCookies(`role`)
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
-    const toggleDropdown = () => {
-        setisDropdownOpen(!isDropdownOpen)
-        console.log("Profile Image:", getCookies("profile_picture"));
-    }
     
     const handleLogout = () => {
         removeCookie("token")
@@ -103,6 +100,11 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
                     <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`} alt="Profile" width={100} height={100} className="rounded-full" />
                     <div className="text-sm font-semibold">
                         {userName}
+                    </div>
+                    <div className="bg-black px-2 py-3 rounded-lg">
+                        <div className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF)] [background-size:200%] text-transparent text-sm bg-clip-text font-medium">
+                            {role}
+                        </div>
                     </div>
                 </div>
                 {/* end user section */}

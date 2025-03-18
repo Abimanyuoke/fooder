@@ -122,7 +122,7 @@ const LoginPage = () => {
             </div>
 
             {/* buat */}
-            <div className="absolute right-[130px] -z-10 sm:hidden lg:block">
+            <div className="absolute right-[130px] -z-10 hidden lg:block">
                 <Image
                     src={gambar}
                     height={400}
@@ -131,7 +131,7 @@ const LoginPage = () => {
 
 
         </div>
-    )
+    ) 
 }
 
 export default LoginPage

@@ -7,7 +7,7 @@ type Props = {
     className?: string
 }
 
-export const ButtonSuccess = ({ children, type, onClick, className }: Props) => {
+export const ButtonSuccess = ({ children, type, onClick,  className }: Props) => {
     return (
         <button className={`text-sm bg-green-600 text-white rounded-md py-2 px-4 hover:bg-green-700 font-bold ${className}`} type={type} onClick={() => { if (onClick) onClick() }}>
             {children}

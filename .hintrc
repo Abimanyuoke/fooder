@@ -17,7 +17,7 @@
     ],
     "no-inline-styles": "off",
     "typescript-config/consistent-casing": "off",
-    "axe/forms": [
+    "axe/forms": [ 
       "default",
       {
         "label": "off",
