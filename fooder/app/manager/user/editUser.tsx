@@ -1,6 +1,6 @@
 "use client"
 
-import {  IUser } from "@/app/types"
+import { IUser } from "@/app/types"
 import { BASE_API_URL } from "@/global"
 import { put } from "@/lib/bridge"
 import { getCookies } from "@/lib/client-cookies"

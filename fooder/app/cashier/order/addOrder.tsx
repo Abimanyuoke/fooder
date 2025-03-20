@@ -2,7 +2,7 @@
 
 import { IOrder } from "@/app/types"
 import { BASE_API_URL } from "@/global"
-import { post } from "@/lib/bridge"
+// import { post } from "@/lib/bridge"
 import { getCookies } from "@/lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef, useState } from "react"
@@ -12,57 +12,90 @@ import { InputGroupComponent } from "@/components/InputComponent"
 import Modal from "@/components/modal"
 import Select from "@/components/select"
 
-const AddOrder = () => {
-    const [isShow, setIsShow] = useState<boolean>(false)
+
+
+
+const AddOrder = ({ orderLists }: { orderLists: { id: number; qty: number }[] }) => {
+    const [isShow, setIsShow] = useState<boolean>(false);
     const [order, setOrder] = useState<IOrder>({
         id: 0, uuid: ``, customer: ``, table_number: ``, total_price: 0,
         payment_method: ``, status: ``, createdAt: ``, updatedAt: ``, userId: 0, orderLists: [],
-    })
-    const router = useRouter()
-    const TOKEN = getCookies("token") || ""
-    const formRef = useRef<HTMLFormElement>(null)
+    });
+
+    const router = useRouter();
+    const TOKEN = getCookies("token") || "";
+    const formRef = useRef<HTMLFormElement>(null);
+
     const openModal = () => {
-        setOrder({
-            id: 0, uuid: ``, customer: ``, table_number: ``, total_price: 0,
-            payment_method: ``, status: ``, createdAt: ``, updatedAt: ``, userId: 0, orderLists: [],
-        })
-        setIsShow(true)
-        if (formRef.current) formRef.current.reset()
+        setOrder({ ...order, orderLists }); // Set orderLists dari transaksi
+        setIsShow(true);
+        if (formRef.current) formRef.current.reset();
+    };
+
+    interface IOrderListItem {
+        id: number;
+        qty: number;
+        note?: string;
     }
 
     const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
         try {
-            e.preventDefault()
-            const url = `${BASE_API_URL}/order`
-            const { customer, table_number, payment_method, status, orderLists } = order
-            const userId = getCookies("userId") || "";
+            const url = `${BASE_API_URL}/order`;
+            const userId = Number(getCookies("id")) || "";
 
-            const formData = new FormData();
-            formData.append("customer", customer);
-            formData.append("table_number", table_number.toString());
-            formData.append("payment_method", payment_method);
-            formData.append("status", status);
-            formData.append("userId", userId.toString());
-            formData.append("orderlists", JSON.stringify(orderLists));
+            console.log('UserId:', userId)
 
-            const { data } = await post(url, formData, TOKEN)
+            if (!userId) {
+                toast("User not found", { hideProgressBar: true, containerId: "toastOrder", type: "error" });
+                return;
+            }
+
+            // Pastikan order.orderLists memiliki tipe yang benar
+            const orderlists = order.orderLists.map((item: IOrderListItem) => ({
+                menuId: item.id,
+                quantity: item.qty,
+                note: item.note || "-", // Default note jika tidak ada
+            }));
+
+            const payload = {
+                customer: order.customer,
+                table_number: order.table_number,
+                payment_method: order.payment_method,
+                status: order.status,
+                orderlists, // Format harus sesuai dengan backend
+                user: { id: Number(userId) }, // User ID dikirim sebagai objek user
+            };
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${TOKEN}`, // Jika backend membutuhkan token
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
             if (data?.status) {
-                setIsShow(false)
-                toast(data?.message, { hideProgressBar: true, containerId: `toastOrder`, type: `success` })
-                setTimeout(() => router.refresh(), 1000)
+                setIsShow(false);
+                toast(data?.message, { hideProgressBar: true, containerId: "toastOrder", type: "success" });
+                setTimeout(() => router.refresh(), 1000);
             } else {
-                toast(data?.message, { hideProgressBar: true, containerId: `toastOrder`, type: `warning` })
+                toast(data?.message, { hideProgressBar: true, containerId: "toastOrder", type: "warning" });
             }
         } catch (error) {
             console.log(error);
-            toast(`Something Wrong`, { hideProgressBar: true, containerId: `toastOrder`, type: `error` })
+            toast("Something went wrong", { hideProgressBar: true, containerId: "toastOrder", type: "error" });
         }
-    }
+    };
+
 
     return (
         <div>
             <ToastContainer containerId={`toastOrder`} />
-            <ButtonSuccess type="button" onClick={() => openModal()}>
+            <ButtonSuccess type="button" onClick={openModal}>
                 <div className="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -70,41 +103,18 @@ const AddOrder = () => {
                     Add Order
                 </div>
             </ButtonSuccess>
-            <Modal isShow={isShow} onClose={state => setIsShow(state)}>
+            <Modal isShow={isShow} onClose={(state) => setIsShow(state)}>
                 <form onSubmit={handleSubmit} ref={formRef}>
-                    <div className="sticky top-0 bg-white px-5 pt-5 pb-3 shadow">
-                        <div className="w-full flex items-center">
-                            <div className="flex flex-col">
-                                <strong className="font-bold text-2xl text-black">Create Order</strong>
-                                <small className="text-slate-400 text-sm">Cashier can create order items on this page.</small>
-                            </div>
-                            <div className="ml-auto">
-                                <button type="button" className="text-slate-400" onClick={() => setIsShow(false)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Input fields */}
                     <div className="p-5">
-                        <InputGroupComponent id={`customer`} type="text" value={order.customer}
-                            onChange={val => setOrder({ ...order, customer: val })}
-                            required={true} label="Customer" className="text-black" />
-
-                        <InputGroupComponent id={`table_number`} type="text" value={order.table_number}
-                            onChange={val => setOrder({ ...order, table_number: val })}
-                            required={true} label="Table" className="text-black" />
-
-                        <Select id={`payment_method`} value={order.payment_method} label="Payment Method"
-                            required={true} onChange={val => setOrder({ ...order, payment_method: val })} className="text-black">
+                        <InputGroupComponent id="customer" type="text" value={order.customer} onChange={(val) => setOrder({ ...order, customer: val })} required label="Customer" className="text-black" />
+                        <InputGroupComponent id="table_number" type="text" value={order.table_number} onChange={(val) => setOrder({ ...order, table_number: val })} required label="Table" className="text-black" />
+                        <Select id="payment_method" value={order.payment_method} label="Payment Method" required onChange={(val) => setOrder({ ...order, payment_method: val })} className="text-black">
                             <option value="">--- Select Payment ---</option>
                             <option value="CASH">CASH</option>
                             <option value="QRIS">QRIS</option>
                         </Select>
-
-                        <Select id={`status`} value={order.status} label="Status Method"
-                            required={true} onChange={val => setOrder({ ...order, status: val })} className="text-black">
+                        <Select id="status" value={order.status} label="Status Method" required onChange={(val) => setOrder({ ...order, status: val })} className="text-black">
                             <option value="">--- Select Status ---</option>
                             <option value="NEW">NEW</option>
                             <option value="PAID">PAID</option>
@@ -113,21 +123,135 @@ const AddOrder = () => {
                     </div>
                     <div className="w-full p-5 flex rounded-b-2xl shadow">
                         <div className="flex ml-auto gap-2">
-                            <ButtonDanger type="button" onClick={() => setIsShow(false)}>
-                                Cancel
-                            </ButtonDanger>
-                            <ButtonPrimary type="submit">
-                                Save
-                            </ButtonPrimary>
+                            <ButtonDanger type="button" onClick={() => setIsShow(false)}>Cancel</ButtonDanger>
+                            <ButtonPrimary type="submit">Save</ButtonPrimary>
                         </div>
                     </div>
                 </form>
             </Modal>
         </div>
-    )
-}
+    );
+};
 
 export default AddOrder;
+
+
+// const AddOrder = () => {
+//     const [isShow, setIsShow] = useState<boolean>(false)
+//     const [order, setOrder] = useState<IOrder>({
+//         id: 0, uuid: ``, customer: ``, table_number: ``, total_price: 0,
+//         payment_method: ``, status: ``, createdAt: ``, updatedAt: ``, userId: 0, orderLists: [],
+//     })
+//     const router = useRouter()
+//     const TOKEN = getCookies("token") || ""
+//     const formRef = useRef<HTMLFormElement>(null)
+//     const openModal = () => {
+//         setOrder({
+//             id: 0, uuid: ``, customer: ``, table_number: ``, total_price: 0,
+//             payment_method: ``, status: ``, createdAt: ``, updatedAt: ``, userId: 0, orderLists: [],
+//         })
+//         setIsShow(true)
+//         if (formRef.current) formRef.current.reset()
+//     }
+
+//     const handleSubmit = async (e: FormEvent) => {
+//         try {
+//             e.preventDefault()
+//             const url = `${BASE_API_URL}/order`
+//             const { customer, table_number, payment_method, status, orderLists } = order
+//             const userId = getCookies("userId") || "";
+
+//             const formData = new FormData();
+//             formData.append("customer", customer);
+//             formData.append("table_number", table_number.toString());
+//             formData.append("payment_method", payment_method);
+//             formData.append("status", status);
+//             formData.append("userId", userId.toString());
+//             formData.append("orderlists", JSON.stringify(orderLists));
+
+//             const { data } = await post(url, formData, TOKEN)
+//             if (data?.status) {
+//                 setIsShow(false)
+//                 toast(data?.message, { hideProgressBar: true, containerId: `toastOrder`, type: `success` })
+//                 setTimeout(() => router.refresh(), 1000)
+//             } else {
+//                 toast(data?.message, { hideProgressBar: true, containerId: `toastOrder`, type: `warning` })
+//             }
+//         } catch (error) {
+//             console.log(error);
+//             toast(`Something Wrong`, { hideProgressBar: true, containerId: `toastOrder`, type: `error` })
+//         }
+//     }
+
+//     return (
+//         <div>
+//             <ToastContainer containerId={`toastOrder`} />
+//             <ButtonSuccess type="button" onClick={() => openModal()}>
+//                 <div className="flex items-center gap-2">
+//                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+//                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+//                     </svg>
+//                     Add Order
+//                 </div>
+//             </ButtonSuccess>
+//             <Modal isShow={isShow} onClose={state => setIsShow(state)}>
+//                 <form onSubmit={handleSubmit} ref={formRef}>
+//                     <div className="sticky top-0 bg-white px-5 pt-5 pb-3 shadow">
+//                         <div className="w-full flex items-center">
+//                             <div className="flex flex-col">
+//                                 <strong className="font-bold text-2xl text-black">Create Order</strong>
+//                                 <small className="text-slate-400 text-sm">Cashier can create order items on this page.</small>
+//                             </div>
+//                             <div className="ml-auto">
+//                                 <button type="button" className="text-slate-400" onClick={() => setIsShow(false)}>
+//                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+//                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+//                                     </svg>
+//                                 </button>
+//                             </div>
+//                         </div>
+//                     </div>
+//                     <div className="p-5">
+//                         <InputGroupComponent id={`customer`} type="text" value={order.customer}
+//                             onChange={val => setOrder({ ...order, customer: val })}
+//                             required={true} label="Customer" className="text-black" />
+
+//                         <InputGroupComponent id={`table_number`} type="text" value={order.table_number}
+//                             onChange={val => setOrder({ ...order, table_number: val })}
+//                             required={true} label="Table" className="text-black" />
+
+//                         <Select id={`payment_method`} value={order.payment_method} label="Payment Method"
+//                             required={true} onChange={val => setOrder({ ...order, payment_method: val })} className="text-black">
+//                             <option value="">--- Select Payment ---</option>
+//                             <option value="CASH">CASH</option>
+//                             <option value="QRIS">QRIS</option>
+//                         </Select>
+
+//                         <Select id={`status`} value={order.status} label="Status Method"
+//                             required={true} onChange={val => setOrder({ ...order, status: val })} className="text-black">
+//                             <option value="">--- Select Status ---</option>
+//                             <option value="NEW">NEW</option>
+//                             <option value="PAID">PAID</option>
+//                             <option value="DONE">DONE</option>
+//                         </Select>
+//                     </div>
+//                     <div className="w-full p-5 flex rounded-b-2xl shadow">
+//                         <div className="flex ml-auto gap-2">
+//                             <ButtonDanger type="button" onClick={() => setIsShow(false)}>
+//                                 Cancel
+//                             </ButtonDanger>
+//                             <ButtonPrimary type="submit">
+//                                 Save
+//                             </ButtonPrimary>
+//                         </div>
+//                     </div>
+//                 </form>
+//             </Modal>
+//         </div>
+//     )
+// }
+
+// export default AddOrder;
 
 
 
@@ -280,7 +404,7 @@ export default AddOrder;
 
 
 // }
-// export default AddOrder; 
+// export default AddOrder;
 
 
 

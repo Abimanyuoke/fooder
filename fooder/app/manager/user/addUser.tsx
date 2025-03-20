@@ -20,7 +20,7 @@ const AddUser = () => {
         id: 0, uuid: ``, name: ``, email: ``,
         password: ``, profile_picture: ``, role: ``, createdAt: ``, updatedAt: ``
     })
-    const router = useRouter()  
+    const router = useRouter()
     const TOKEN = getCookies("token") || ""
     const [file, setFile] = useState<File | null>(null)
     const formRef = useRef<HTMLFormElement>(null)

@@ -21,7 +21,7 @@ const getUser = async (search: string): Promise<IUser[]> => {
         console.log(error)
         return []
     }
-    
+
 
 }
 
@@ -54,35 +54,35 @@ const UserPage = async ({ searchParams }: { searchParams: { [key: string]: strin
                             No data Available
                         </AlertInfo>
                         :
-                            <div className="m-2">
-                                {user.map((data, index) => (
-                                    <div key={`keyPrestasi${index}`} className={`flex flex-wrap shadow m-2`}>
-                                        <div className="w-full md:w-1/12 p-2 text-white">
-                                            <small className="text-sm font-bold text-primary">Picture</small><br />
-                                            <Image width={40} height={40} src={`${BASE_IMAGE_PROFILE}/${data.profile_picture}`} className="rounded-full overflow-hidden" alt="preview" unoptimized />
-                                        </div>
-                                        <div className="w-full md:w-2/12 p-2 text-white">
-                                            <small className="text-sm font-bold text-primary">Name</small> <br />
-                                            {data.name}
-                                        </div>
-                                        <div className="w-full md:w-1/12 p-2 text-white">
-                                            <small className="text-sm font-bold text-primary">Email</small> <br />
-                                            {data.email}
-                                        </div>
-                                        <div className="w-full md:w-5/12 px-36 p-2 text-white">
-                                            <small className="text-sm font-bold text-primary">Role</small> <br />
-                                            {data.role}
-                                        </div> 
-                                        <div className="w-full md:w-2/12 p-2 text-white">
-                                            <small className="text-sm font-bold text-primary">Action</small><br />
-                                            <div className="flex gap-1">
-                                                <EditUser selectedUser={data} />
-                                                <DeleteUser selectedUser={data}/>
-                                            </div>
+                        <div className="m-2">
+                            {user.map((data, index) => (
+                                <div key={`keyPrestasi${index}`} className={`flex flex-wrap shadow m-2`}>
+                                    <div className="w-full md:w-1/12 p-2 text-white">
+                                        <small className="text-sm font-bold text-primary">Picture</small><br />
+                                        <Image width={40} height={40} src={`${BASE_IMAGE_PROFILE}/${data.profile_picture}`} className="rounded-full overflow-hidden" alt="preview" unoptimized />
+                                    </div>
+                                    <div className="w-full md:w-2/12 p-2 text-white">
+                                        <small className="text-sm font-bold text-primary">Name</small> <br />
+                                        {data.name}
+                                    </div>
+                                    <div className="w-full md:w-1/12 p-2 text-white">
+                                        <small className="text-sm font-bold text-primary">Email</small> <br />
+                                        {data.email}
+                                    </div>
+                                    <div className="w-full md:w-5/12 px-36 p-2 text-white">
+                                        <small className="text-sm font-bold text-primary">Role</small> <br />
+                                        {data.role}
+                                    </div>
+                                    <div className="w-full md:w-2/12 p-2 text-white">
+                                        <small className="text-sm font-bold text-primary">Action</small><br />
+                                        <div className="flex gap-1">
+                                            <EditUser selectedUser={data} />
+                                            <DeleteUser selectedUser={data} />
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
+                        </div>
                 }
 
             </div>

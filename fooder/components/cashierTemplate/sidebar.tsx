@@ -31,7 +31,7 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
     const [isShow, setIsShow] = useState(false)
     const role = getCookies(`role`)
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
-    
+
     const handleLogout = () => {
         removeCookie("token")
         removeCookie("id")

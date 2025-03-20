@@ -44,8 +44,8 @@ const LoginPage = () => {
                     storeCookie("id", data.data.id)
                     storeCookie("name", data.data.name)
                     storeCookie("role", data.data.role)
-                    storeCookie("profile_picture", data.data.profile_picture )
-                    let role = data.data.role 
+                    storeCookie("profile_picture", data.data.profile_picture)
+                    let role = data.data.role
                     if (role === `MANAGER`) setTimeout(() => router.replace(`/manager/dashboard`), 1000)
                     else if (role === `CASHIER`) setTimeout(() => router.replace(`/cashier/dashboard`), 1000)
                 }
@@ -63,11 +63,11 @@ const LoginPage = () => {
             <div className="sm:w-3/4 lg:w-full lg:pl-56 h-full flex mx-auto items-center p-5">
                 <div className="w-full md:w-6/12 lg:w-5/12 min-h-[600px] rounded-l-lg p-5 px-16 bg-slate-800 flex flex-col items-center relative">
                     <div className="absolute bottom-2 left-0 w-full py-2 text-center">
-                    <div className="flex justify-center items-center py-3 space-x-7 text-2xl text-primary cursor-pointer">
-                        <FaGoogle/>
-                        <MdEmail className="text-3xl"/>
-                        <FaTwitter className="text-3xl"/>
-                    </div>
+                        <div className="flex justify-center items-center py-3 space-x-7 text-2xl text-primary cursor-pointer">
+                            <FaGoogle />
+                            <MdEmail className="text-3xl" />
+                            <FaTwitter className="text-3xl" />
+                        </div>
                         <small className="text-slate-600">Copyrihgt @2024</small>
                     </div>
 
@@ -131,7 +131,7 @@ const LoginPage = () => {
 
 
         </div>
-    ) 
+    )
 }
 
 export default LoginPage

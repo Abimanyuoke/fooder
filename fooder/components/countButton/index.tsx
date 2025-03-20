@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const CounterButton = () => {
     const [count, setCount] = useState(0);

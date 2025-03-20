@@ -30,7 +30,7 @@ const MenuPage = async ({ searchParams }: { searchParams: { [key: string]: strin
   const category = (cat: string): React.ReactNode => {
     if (cat === "FOOD") {
       return <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        Food 
+        Food
       </span>
     }
     if (cat === "SNACK") {
@@ -43,7 +43,7 @@ const MenuPage = async ({ searchParams }: { searchParams: { [key: string]: strin
     </span>
   }
 
-    return (
+  return (
     <div>
       <div className="mt-2 bg-slate-900 rounded-lg p-3 border-t-4 border-t-primary shadow-md">
         <h4 className="text-xl font-bold mb-2 text-white">Menu Data</h4>
@@ -58,7 +58,7 @@ const MenuPage = async ({ searchParams }: { searchParams: { [key: string]: strin
           </div>
           {/* Add Menu Button */}
           <div className="ml-4">
-              <AddMenu/>
+            <AddMenu />
           </div>
         </div>
         {
@@ -67,39 +67,39 @@ const MenuPage = async ({ searchParams }: { searchParams: { [key: string]: strin
               No data Available
             </AlertInfo>
             :
-              <div className="m-2">
-                {menu.map((data, index) => (
-                  <div key={`keyPrestasi${index}`} className={`flex flex-wrap shadow m-2`}>
-                    <div className="w-full md:w-1/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Picture</small><br />
-                      <Image width={40} height={40} src={`${BASE_IMAGE_MENU}/${data.picture}`} className="rounded-sm overflow-hidden" alt="preview" unoptimized />
-                    </div>
-                    <div className="w-full md:w-2/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Name</small> <br />
-                      {data.name}
-                    </div>
-                    <div className="w-full md:w-1/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Price</small> <br />
-                      {data.price}
-                    </div>
-                    <div className="w-full md:w-5/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Description</small> <br />
-                      {data.description}
-                    </div>
-                    <div className="w-full md:w-1/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Category</small> <br />
-                      {category(data.category)}
-                    </div>
-                    <div className="w-full md:w-2/12 p-2 text-white">
-                      <small className="text-sm font-bold text-primary">Action</small><br />
-                      <div className="flex gap-1">
-                        <EditMenu selectedMenu={data}/>
-                        <DeleteMenu selectedMenu={data}/>
-                      </div>
+            <div className="m-2">
+              {menu.map((data, index) => (
+                <div key={`keyPrestasi${index}`} className={`flex flex-wrap shadow m-2`}>
+                  <div className="w-full md:w-1/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Picture</small><br />
+                    <Image width={40} height={40} src={`${BASE_IMAGE_MENU}/${data.picture}`} className="rounded-sm overflow-hidden" alt="preview" unoptimized />
+                  </div>
+                  <div className="w-full md:w-2/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Name</small> <br />
+                    {data.name}
+                  </div>
+                  <div className="w-full md:w-1/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Price</small> <br />
+                    {data.price}
+                  </div>
+                  <div className="w-full md:w-5/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Description</small> <br />
+                    {data.description}
+                  </div>
+                  <div className="w-full md:w-1/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Category</small> <br />
+                    {category(data.category)}
+                  </div>
+                  <div className="w-full md:w-2/12 p-2 text-white">
+                    <small className="text-sm font-bold text-primary">Action</small><br />
+                    <div className="flex gap-1">
+                      <EditMenu selectedMenu={data} />
+                      <DeleteMenu selectedMenu={data} />
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
+            </div>
         }
 
       </div>
