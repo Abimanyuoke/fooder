@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MANAGER
+  CASHIER
+}
+
+enum Category {
+  FOOD
+  DRINK
+  SNACK
+}
+
+enum Payment {
+  CASH
+  QRIS
+}
+
+enum Status {
+  NEW
+  PAID
+  DONE
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  uuid            String   @unique @default("")
+  name            String   @default("")
+  email           String   @unique @default("")
+  password        String   @default("")
+  profile_picture String   @default("")
+  role            Role     @default(CASHIER)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  orderDetail     Order[]
+}
+
+model Menu {
+  id          Int         @id @default(autoincrement())
+  uuid        String      @unique @default("")
+  name        String      @default("")
+  price       Int         @default(0)
+  category    Category    @default(FOOD)
+  picture     String      @default("")
+  description String      @default("") @db.Text
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderLists  OrderList[]
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  uuid           String      @unique @default("")
+  customer       String      @default("")
+  table_number   String      @default("")
+  total_price    Int         @default(0)
+  payment_method Payment     @default(CASH)
+  status         Status      @default(NEW)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  orderLists     OrderList[]
+  User           User?       @relation(fields: [userId], references: [id])
+  userId         Int?
+}
+
+model OrderList {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default("")
+  quantity  Int      @default(0)
+  note      String   @default("") @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Menu      Menu?    @relation(fields: [menuId], references: [id])
+  menuId    Int?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
+} 
