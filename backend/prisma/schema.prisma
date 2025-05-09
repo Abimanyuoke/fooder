@@ -73,7 +73,7 @@ model Menu {
   price       Int         @default(0)
   category    Category    @default(FOOD)
   picture     String      @default("")
-  description String      @default("") @db.Text
+  description  String     @db.Text
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   orderLists  OrderList[]
@@ -98,7 +98,7 @@ model OrderList {
   id        Int      @id @default(autoincrement())
   uuid      String   @unique @default("")
   quantity  Int      @default(0)
-  note      String   @default("") @db.Text
+  note      String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Menu      Menu?    @relation(fields: [menuId], references: [id])

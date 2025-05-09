@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
 import gambar from "@/public/image/ksaykhao.jpg"
-import { FaGoogle, FaTwitter } from "react-icons/fa"
-import { MdEmail } from "react-icons/md"
+import { GoogleButton } from "@/components/auth/social-button"
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>("")
@@ -59,16 +58,11 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="w-screen h-screen bg-slate-900 bg-cover flex justify-center items-center relative z-10">
+        <div className="w-screen flex justify-center items-center relative z-10">
             <ToastContainer containerId={`toastLogin`} />
             <div className="sm:w-3/4 lg:w-full lg:pl-56 h-full flex mx-auto items-center p-5">
                 <div className="w-full md:w-6/12 lg:w-5/12 min-h-[600px] rounded-l-lg p-5 px-16 bg-slate-800 flex flex-col items-center relative">
                     <div className="absolute bottom-2 left-0 w-full py-2 text-center">
-                        <div className="flex justify-center items-center py-3 space-x-7 text-2xl text-primary cursor-pointer">
-                            <FaGoogle />
-                            <MdEmail className="text-3xl" />
-                            <FaTwitter className="text-3xl" />
-                        </div>
                         <small className="text-slate-600">Copyrihgt @2024</small>
                     </div>
 
@@ -118,6 +112,7 @@ const LoginPage = () => {
                                 Login
                             </button>
                         </div>
+                        <GoogleButton />
                     </form>
                 </div>
             </div>
