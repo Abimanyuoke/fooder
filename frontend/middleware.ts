@@ -1,5 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 
+export { auth as authMiddleware } from "@/auth"
+
 export const middleware = async (request: NextRequest) => {  
     const token = request.cookies.get("token")?.value;
     const role = request.cookies.get("role")?.value;

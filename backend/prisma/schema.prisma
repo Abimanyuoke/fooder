@@ -29,17 +29,41 @@ enum Status {
   DONE
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            Int     @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
 model User {
-  id              Int      @id @default(autoincrement())
-  uuid            String   @unique @default("")
-  name            String   @default("")
-  email           String   @unique @default("")
-  password        String   @default("")
-  profile_picture String   @default("")
-  role            Role     @default(CASHIER)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  uuid            String    @unique @default("")
+  name            String    @default("")
+  email           String    @unique @default("")
+  password        String    @default("")
+  emailVerified   DateTime? @map("email_verified")
+  profile_picture String    @default("")
+  role            Role      @default(CASHIER)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  accounts        Account[]
   orderDetail     Order[]
+
+  @@map("users")
 }
 
 model Menu {
@@ -81,4 +105,4 @@ model OrderList {
   menuId    Int?
   Order     Order?   @relation(fields: [orderId], references: [id])
   orderId   Int?
-} 
+}
