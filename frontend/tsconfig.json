@@ -38,7 +38,7 @@
     "lib/bridge.ts",
     "../be_fooder/middleware.ts",
     "middleware.ts",
-    "lib/prisma.ts"
+    "../backend/lib/prisma.ts"
   ],
   "exclude": [
     "node_modules"

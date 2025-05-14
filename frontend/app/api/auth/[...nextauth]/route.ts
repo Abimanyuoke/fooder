@@ -32,7 +32,7 @@ export default NextAuth({
     signIn: "/login", // Arahkan ke login custom kamu
   },
   session: {
-    strategy: "database",
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
