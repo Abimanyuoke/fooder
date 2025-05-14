@@ -43,8 +43,6 @@ model User {
   accounts        Account[]
   sessions        Session[]
   orderDetail     Order[]
-
-  @@map("users")
 }
 
 model Account {
