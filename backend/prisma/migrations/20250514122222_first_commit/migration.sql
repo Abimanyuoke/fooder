@@ -1,23 +1,4 @@
 -- CreateTable
-CREATE TABLE `accounts` (
-    `id` VARCHAR(191) NOT NULL,
-    `user_id` INTEGER NOT NULL,
-    `type` VARCHAR(191) NOT NULL,
-    `provider` VARCHAR(191) NOT NULL,
-    `provider_account_id` VARCHAR(191) NOT NULL,
-    `refresh_token` TEXT NULL,
-    `access_token` TEXT NULL,
-    `expires_at` INTEGER NULL,
-    `token_type` VARCHAR(191) NULL,
-    `scope` VARCHAR(191) NULL,
-    `id_token` TEXT NULL,
-    `session_state` VARCHAR(191) NULL,
-
-    UNIQUE INDEX `accounts_provider_provider_account_id_key`(`provider`, `provider_account_id`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `uuid` VARCHAR(191) NOT NULL DEFAULT '',
@@ -33,6 +14,54 @@ CREATE TABLE `users` (
     UNIQUE INDEX `users_uuid_key`(`uuid`),
     UNIQUE INDEX `users_email_key`(`email`),
     PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Account` (
+    `id` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `type` VARCHAR(191) NOT NULL,
+    `provider` VARCHAR(191) NOT NULL,
+    `providerAccountId` VARCHAR(191) NOT NULL,
+    `refresh_token` TEXT NULL,
+    `access_token` TEXT NULL,
+    `expires_at` INTEGER NULL,
+    `token_type` VARCHAR(191) NULL,
+    `scope` VARCHAR(191) NULL,
+    `id_token` TEXT NULL,
+    `session_state` VARCHAR(191) NULL,
+    `refresh_token_expires_in` INTEGER NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `Account_userId_key`(`userId`),
+    INDEX `Account_userId_idx`(`userId`),
+    UNIQUE INDEX `Account_provider_providerAccountId_key`(`provider`, `providerAccountId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Session` (
+    `id` VARCHAR(191) NOT NULL,
+    `sessionToken` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `expires` DATETIME(3) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `Session_sessionToken_key`(`sessionToken`),
+    INDEX `Session_userId_idx`(`userId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `VerificationToken` (
+    `identifier` VARCHAR(191) NOT NULL,
+    `token` VARCHAR(191) NOT NULL,
+    `expires` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `VerificationToken_token_key`(`token`),
+    UNIQUE INDEX `VerificationToken_identifier_token_key`(`identifier`, `token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -84,7 +113,10 @@ CREATE TABLE `OrderList` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Account` ADD CONSTRAINT `Account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Session` ADD CONSTRAINT `Session_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Order` ADD CONSTRAINT `Order_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

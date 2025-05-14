@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react" // atau '@/auth' jika kamu pakai custom
 
 export const GoogleButton = () => {
     const handleLogin = async () => {
-        await signIn("google", { callbackUrl: "/cashier/dashboard" })
+        await signIn("google")
     }
 
     return (
