@@ -1,9 +1,9 @@
 import NextAuth, { DefaultSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../../lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 // Extend Session Type to include id and role
 declare module "next-auth" {
