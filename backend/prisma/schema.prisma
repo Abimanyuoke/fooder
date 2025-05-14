@@ -29,26 +29,6 @@ enum Status {
   DONE
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            Int     @map("user_id")
-  type              String
-  provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
 model User {
   id              Int       @id @default(autoincrement())
   uuid            String    @unique @default("")
@@ -61,9 +41,54 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   accounts        Account[]
+  sessions        Session[]
   orderDetail     Order[]
 
   @@map("users")
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   Int     @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Menu {
@@ -73,7 +98,7 @@ model Menu {
   price       Int         @default(0)
   category    Category    @default(FOOD)
   picture     String      @default("")
-  description  String     @db.Text
+  description String      @db.Text
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   orderLists  OrderList[]
