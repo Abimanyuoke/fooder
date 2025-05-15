@@ -37,7 +37,7 @@
     "lib/server-cookies.ts",
     "lib/bridge.ts",
     "../be_fooder/middleware.ts",
-    "middleware.ts",
+    "../middleware.ts",
     "../backend/lib/prisma.ts"
   ],
   "exclude": [
