@@ -1,14 +1,13 @@
 "use client"
 
-import { BASE_API_URL } from "@/global"
+import { BASE_API_URL } from "../../global"
 import { storeCookie } from "../../lib/client-cookies"
 import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
-import gambar from "@/public/image/ksaykhao.jpg"
-import { GoogleButton } from "@/components/auth/social-button"
+import gambar from "../../../public/image/ksaykhao.jpg"
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>("")
@@ -63,7 +62,7 @@ const LoginPage = () => {
             <div className="sm:w-3/4 lg:w-full lg:pl-56 h-full flex mx-auto items-center p-5">
                 <div className="w-full md:w-6/12 lg:w-5/12 min-h-[600px] rounded-l-lg p-5 px-16 bg-slate-800 flex flex-col items-center relative">
                     <div className="absolute bottom-2 left-0 w-full py-2 text-center">
-                        <small className="text-slate-600">Copyrihgt @2024</small>
+                        <small className="text-slate-600">Copyrihgt ../../..2024</small>
                     </div>
 
                     <Image alt="moklet-app" width={150} height={100} src={`/image/restaurant.png`}
@@ -112,7 +111,7 @@ const LoginPage = () => {
                                 Login
                             </button>
                         </div>
-                        <GoogleButton />
+                        {/* <GoogleButton /> */}
                     </form>
                 </div>
             </div>

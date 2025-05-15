@@ -1,14 +1,14 @@
 "use client"
 
-import {  IOrder } from "@/app/types"
-import { BASE_API_URL } from "@/global"
-import { drop } from "@/lib/bridge"
-import { getCookies } from "@/lib/client-cookies"
+import {  IOrder } from "../../../app/types"
+import { BASE_API_URL } from "../../../global"
+import { drop } from "../../../lib/bridge"
+import { getCookies } from "../../../lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { ButtonWarning, ButtonDanger, ButtonSuccess } from "@/components/button"
-import Modal from "@/components/modal"
+import { ButtonWarning, ButtonDanger, ButtonSuccess } from "../../../components/button"
+import Modal from "../../../components/modal"
 
 const DeleteOrder = ({ selectedOrder }: { selectedOrder: IOrder }) => {
     const [isShow, setIsShow] = useState<boolean>(false)

@@ -24,8 +24,8 @@
       }
     ],
     "paths": {
-      "@backend/*": [
-        "../backend/*"
+      "@/*": [
+        "./*"
       ]
     }
   },
@@ -39,8 +39,10 @@
     "../be_fooder/middleware.ts",
     "middleware.ts",
     "../backend/lib/prisma.ts"
-  ],
+  ], 
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "app/api/user/route.ts",
+    "auth.ts"
   ]
 }

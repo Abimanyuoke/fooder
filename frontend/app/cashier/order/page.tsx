@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { IMenu } from "@/app/types";
+import { IMenu } from "../../../app/types";
 import { getCookies } from "../../../lib/client-cookies";
-import { BASE_API_URL, BASE_IMAGE_MENU } from "@/global";
+import { BASE_API_URL, BASE_IMAGE_MENU } from "../../../global";
 import { get } from "../../../lib/bridge";
-import { AlertInfo } from "@/components/alert";
+import { AlertInfo } from "../../../components/alert";
 import Image from "next/image";
 import AddOrder from "./addOrder";
 
@@ -144,11 +144,11 @@ export default TranskasiPage;
 
 // import { useState, useEffect } from "react";
 // import { useSearchParams } from "next/navigation";
-// import { IMenu } from "@/app/types";
+// import { IMenu } from "../../../app/types";
 // import { getCookies } from "../../../lib/client-cookies";
-// import { BASE_API_URL, BASE_IMAGE_MENU } from "@/global";
+// import { BASE_API_URL, BASE_IMAGE_MENU } from "../../../global";
 // import { get } from "../../../lib/bridge";
-// import { AlertInfo } from "@/components/alert";
+// import { AlertInfo } from "../../../components/alert";
 // import Image from "next/image";
 // import AddOrder from "./addOrder";
 

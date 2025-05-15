@@ -1,15 +1,15 @@
 "use client"
 
-import { IOrder } from "@/app/types"
-import { BASE_API_URL } from "@/global"
-import { getCookies } from "@/lib/client-cookies"
+import { IOrder } from "../../../app/types"
+import { BASE_API_URL } from "../../../global"
+import { getCookies } from "../../../lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { ButtonPrimary, ButtonSuccess, ButtonDanger } from "@/components/button"
-import { InputGroupComponent } from "@/components/InputComponent"
-import Modal from "@/components/modal"
-import Select from "@/components/select"
+import { ButtonPrimary, ButtonSuccess, ButtonDanger } from "../../../components/button"
+import { InputGroupComponent } from "../../../components/InputComponent"
+import Modal from "../../../components/modal"
+import Select from "../../../components/select"
 
 const AddOrder = ({ orderLists }: { orderLists: { id: number; qty: number }[] }) => {
     const [isShow, setIsShow] = useState<boolean>(false);

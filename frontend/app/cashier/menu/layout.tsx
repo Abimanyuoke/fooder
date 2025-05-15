@@ -1,4 +1,4 @@
-import CashierTemplate from "@/components/cashierTemplate"
+import CashierTemplate from "../../../components/cashierTemplate"
 import CahsierList from "../../cashierList"
 
 export const metadata = {

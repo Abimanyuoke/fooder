@@ -1,8 +1,8 @@
-import { IMenu } from "@/app/types";
+import { IMenu } from "../../../app/types";
 import { getCookies } from "../../../lib/server-cookies";
-import { BASE_API_URL, BASE_IMAGE_MENU } from "@/global";
+import { BASE_API_URL, BASE_IMAGE_MENU } from "../../../global";
 import { get } from "../../../lib/bridge";
-import { AlertInfo } from "@/components/alert";
+import { AlertInfo } from "../../../components/alert";
 import Image from "next/image"
 import Search from "./search";
 import AddMenu from "./addMenu";

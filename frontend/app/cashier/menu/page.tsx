@@ -1,7 +1,7 @@
-import { IMenu } from "@/app/types";
-import { getCookies } from "@/lib/server-cookies";
-import { BASE_API_URL, BASE_IMAGE_MENU } from "@/global";
-import { get } from "@/lib/bridge";
+import { IMenu } from "../../../app/types";
+import { getCookies } from "../../../lib/server-cookies";
+import { BASE_API_URL, BASE_IMAGE_MENU } from "../../../global";
+import { get } from "../../../lib/bridge";
 import Image from 'next/image';
 import Link from "next/link";
 

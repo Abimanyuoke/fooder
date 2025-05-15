@@ -11,7 +11,7 @@ import { LuRefreshCw } from 'react-icons/lu';
 import { RiDiscountPercentFill } from 'react-icons/ri';
 import { VscGraphLine } from 'react-icons/vsc';
 import { BsFileEarmarkBarGraph } from 'react-icons/bs';
-import SalesChart from '@/components/graph';
+import SalesChart from '../../../components/graph';
 
 const DashboardPage = () => {
     return (

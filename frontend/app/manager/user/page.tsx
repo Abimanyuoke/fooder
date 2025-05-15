@@ -1,8 +1,8 @@
-import { IUser } from "@/app/types";
+import { IUser } from "../../../app/types";
 import { getCookies } from "../../../lib/server-cookies";
-import { BASE_API_URL, BASE_IMAGE_PROFILE } from "@/global";
+import { BASE_API_URL, BASE_IMAGE_PROFILE } from "../../../global";
 import { get } from "../../../lib/bridge";
-import { AlertInfo } from "@/components/alert";
+import { AlertInfo } from "../../../components/alert";
 import Image from "next/image"
 import Search from "./search";
 import AddUser from "./addUser";
@@ -184,9 +184,9 @@ export default UserPage
 
 // import { useState } from "react";
 // import { FaStar } from "react-icons/fa";
-// import img1 from "@/public/image/user/shincan.png"
-// import img2 from "@/public/image/user/shincan2.png"
-// import img3 from "@/public/image/user/shincan3.jpg"
+// import img1 from "../../../public/image/user/shincan.png"
+// import img2 from "../../../public/image/user/shincan2.png"
+// import img3 from "../../../public/image/user/shincan3.jpg"
 // import Image from "next/image";
 
 // interface Testimonial {

@@ -1,14 +1,14 @@
 "use client"
 
-import { IMenu } from "@/app/types"
-import { BASE_API_URL } from "@/global"
-import { drop } from "@/lib/bridge"
-import { getCookies } from "@/lib/client-cookies"
+import { IMenu } from "../../../app/types"
+import { BASE_API_URL } from "../../../global"
+import { drop } from "../../../lib/bridge"
+import { getCookies } from "../../../lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { ButtonPrimary, ButtonDanger } from "@/components/button"
-import Modal from "@/components/modal"
+import { ButtonPrimary, ButtonDanger } from "../../../components/button"
+import Modal from "../../../components/modal"
 
 const DeleteMenu = ({ selectedMenu }: { selectedMenu: IMenu }) => {
     const [isShow, setIsShow] = useState<boolean>(false)

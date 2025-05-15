@@ -1,17 +1,17 @@
 "use client"
 
-import { IMenu } from "@/app/types"
-import { BASE_API_URL } from "@/global"
-import { put } from "@/lib/bridge"
-import { getCookies } from "@/lib/client-cookies"
+import { IMenu } from "../../../app/types"
+import { BASE_API_URL } from "../../../global"
+import { put } from "../../../lib/bridge"
+import { getCookies } from "../../../lib/client-cookies"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { ButtonPrimary, ButtonDanger, ButtonInfo } from "@/components/button"
-import { InputGroupComponent } from "@/components/InputComponent"
-import Modal from "@/components/modal"
-import Select from "@/components/select"
-import FileInput from "@/components/fileInput"
+import { ButtonPrimary, ButtonDanger, ButtonInfo } from "../../../components/button"
+import { InputGroupComponent } from "../../../components/InputComponent"
+import Modal from "../../../components/modal"
+import Select from "../../../components/select"
+import FileInput from "../../../components/fileInput"
 
 const EditMenu = ({ selectedMenu }: { selectedMenu: IMenu }) => {
     const [isShow, setIsShow] = useState<boolean>(false)

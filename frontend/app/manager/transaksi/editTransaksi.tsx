@@ -1,14 +1,14 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { IOrder } from "@/app/types"
-import { BASE_API_URL } from "@/global"
-import { getCookies } from "@/lib/client-cookies"
+import { IOrder } from "../../../app/types"
+import { BASE_API_URL } from "../../../global"
+import { getCookies } from "../../../lib/client-cookies"
 import { FormEvent, useRef, useState } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { ButtonWarning, ButtonDanger, ButtonSuccess } from "@/components/button"
-import Modal from "@/components/modal"
-import Select from "@/components/select"
+import { ButtonWarning, ButtonDanger, ButtonSuccess } from "../../../components/button"
+import Modal from "../../../components/modal"
+import Select from "../../../components/select"
 
 const EditOrder = ({ selectedOrder }: { selectedOrder: IOrder }) => {
     const router = useRouter()
