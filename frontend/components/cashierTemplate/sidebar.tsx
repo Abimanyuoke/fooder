@@ -4,9 +4,10 @@ import { ReactNode, useState } from "react"
 import Image from "next/image"
 import MenuItem from "./menuItem"
 import Logo from '../../public/image/restaurant.png'
-import { getCookies, removeCookie, } from "@/lib/client-cookies"
+import { getCookies, removeCookie, } from "../../lib/client-cookies"
 import { useRouter } from "next/navigation";
-import { BASE_IMAGE_PROFILE } from "@/global"
+import { BASE_IMAGE_PROFILE } from "../../global"
+import { useSession } from "next-auth/react";
 
 
 type MenuType = {
@@ -31,6 +32,7 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
     const [isShow, setIsShow] = useState(false)
     const role = getCookies(`role`)
     const [isDropdownOpen, setisDropdownOpen] = useState(false);
+    const { data: session, status } = useSession();
 
     const handleLogout = () => {
         removeCookie("token")
@@ -97,13 +99,14 @@ const Sidebar = ({ children, id, title, menuList }: CahsierProp) => {
 
                 {/* user section */}
                 <div className="w-full mt-10 mb-6 bg-primary text-black p-3 flex gap-2 items-center">
-                    <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`} alt="Profile" width={100} height={100} className="rounded-full" />
+                    {/* <img src={`${BASE_IMAGE_PROFILE}/${profilePicture}`} alt="Profile" width={100} height={100} className="rounded-full" /> */}
+                    <img src={session?.user?.image ?? (profilePicture ? `${BASE_IMAGE_PROFILE}/${profilePicture}` : "/default-avatar.png")} alt="Profile" width={100} height={100} className="rounded-full" />
                     <div className="text-sm font-semibold">
-                        {userName}
+                        <p className="text-sm font-semibold">{session?.user?.username ?? "Unknown"}</p>
                     </div>
                     <div className="bg-black px-2 py-3 rounded-lg">
                         <div className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF)] [background-size:200%] text-transparent text-sm bg-clip-text font-medium">
-                            {role}
+                            {session?.user?.role ?? "Unknown"}
                         </div>
                     </div>
                 </div>

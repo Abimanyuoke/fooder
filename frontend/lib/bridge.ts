@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { BASE_API_URL } from "@/global";
+import { BASE_API_URL } from "../global";
 
 const axiosInstance = axios.create({
     baseURL: BASE_API_URL

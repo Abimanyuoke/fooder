@@ -7,7 +7,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
-import gambar from "../../../public/image/ksaykhao.jpg"
+import { GoogleButton } from "components/auth/social-button"
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>("")
@@ -111,18 +111,19 @@ const LoginPage = () => {
                                 Login
                             </button>
                         </div>
-                        {/* <GoogleButton /> */}
+                        <GoogleButton />
                     </form>
                 </div>
             </div>
 
             {/* buat */}
-            <div className="absolute right-[130px] -z-10 hidden lg:block">
+            {/* <div className="absolute right-[130px] -z-10 hidden lg:block">
                 <Image
-                    src={gambar}
+                    src="./gambarlogin.jpg"
                     height={400}
+                    width={400}
                     alt="gambar" className="w-full min-h-[645px] rounded-r-lg " />
-            </div>
+            </div> */}
 
 
         </div>

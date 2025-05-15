@@ -41,8 +41,6 @@
     "../backend/lib/prisma.ts"
   ], 
   "exclude": [
-    "node_modules",
-    "app/api/user/route.ts",
-    "auth.ts"
+    "node_modules"
   ]
 }
