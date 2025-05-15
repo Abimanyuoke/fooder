@@ -9,7 +9,7 @@ app.use(express.json())
 
 app.get(`/`, getAllUsers)
 app.get(`/profile`, [verifyToken, verifyRole(["CASHIER", "MANAGER"])], getUserById)
-app.post(`/`, [verifyToken, verifyRole(["MANAGER"]), uploadFile.single("picture"), verifyAddUser], createUser)
+app.post(`/`, [uploadFile.single("picture"), verifyAddUser], createUser)
 app.put(`/:id`, [verifyToken, verifyRole(["CASHIER", "MANAGER"]), uploadFile.single("picture"), verifyEditUser], updateUser)
 app.put(`/profile/:id`, [verifyToken, verifyRole(["CASHIER", "MANAGER"]), uploadFile.single("picture")], changePicture)
 app.delete(`/:id`, [verifyToken, verifyRole(["MANAGER"])], deleteUser)

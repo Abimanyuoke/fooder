@@ -11,7 +11,7 @@ type PropsLayout = {
 
 const RootLayout = ({ children }: PropsLayout) => {
     return (
-        <div className="bg-slate-900">{children}</div>
+        <div className="bg-slate-900 h-full overflow-x-hidden">{children}</div>
     )
 }
 

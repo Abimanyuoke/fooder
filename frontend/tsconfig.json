@@ -39,7 +39,7 @@
     "../be_fooder/middleware.ts",
     "middleware.ts",
     "../backend/lib/prisma.ts"
-  ], 
+  ],
   "exclude": [
     "node_modules"
   ]

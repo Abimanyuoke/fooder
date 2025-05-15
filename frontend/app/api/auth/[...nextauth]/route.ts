@@ -86,6 +86,7 @@ const handler = NextAuth({
                     ? (profile as any).given_name
                     : user.name?.split(" ")[0]); // contoh ambil nama depan
                 token.email = user.email;
+                token.picture = profile && (profile as any).picture;
             }
             return token;
         },

@@ -117,13 +117,7 @@ const LoginPage = () => {
             </div>
 
             {/* buat */}
-            {/* <div className="absolute right-[130px] -z-10 hidden lg:block">
-                <Image
-                    src="./gambarlogin.jpg"
-                    height={400}
-                    width={400}
-                    alt="gambar" className="w-full min-h-[645px] rounded-r-lg " />
-            </div> */}
+            
 
 
         </div>
